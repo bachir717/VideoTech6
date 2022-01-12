@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="videoDao" class="fr.ensup.videotech6.dao.VideoDao" init-method="initialisation" destroy-method="destruction">
+        <property name="dataSourceSk" ref="dataSourceSk"></property>
+    </bean>
+
+    <bean id="videoService" class="fr.ensup.videotech6.service.VideoService" init-method="initialisation" destroy-method="destruction">
+        <property name="iDao" ref="videoDao"></property>
+    </bean>
+
+    <!-- Création du data source à partir des infos contenues dans le fichier conf/datasource.properties -->
+    <bean id="dataSourceSk" class="com.zaxxer.hikari.HikariDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/spring?serverTimezone=Europe/Berlin" />
+        <property name="username" value="root" />
+        <property name="password" value="" />
+        <property name="maximumPoolSize" value="10" />
+        <property name="minimumIdle" value="2" />
+    </bean>
+
+    <!-- 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"> -->
+    <!-- 		<property name="dataSource" ref="dataSourceSk" /> -->
+    <!-- 	</bean> -->
+
+    <!-- 	<context:property-placeholder location="classpath:datasource.properties" ignore-unresolvable="true" /> -->
+
+</beans>
